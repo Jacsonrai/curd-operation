@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function DarkExample({ userData }) {
 
@@ -13,9 +13,19 @@ function DarkExample({ userData }) {
         return each.id;
       })
       .indexOf(id);
+      console.log('indexs',index)
     userData.splice(index, 1);
     history("/");
   };
+  const handleEdit=(id,firstName,lastName,userName,email)=>{
+    localStorage.setItem("firstName",firstName)
+    localStorage.setItem("lastName",lastName)
+    localStorage.setItem("userName",userName)
+    localStorage.setItem("email",email)
+    localStorage.setItem("key",id)
+
+
+  }
 
   return (
     <Table striped bordered hover variant="dark">
@@ -37,7 +47,14 @@ function DarkExample({ userData }) {
               <td>{each?.lastName}</td>
               <td>{each?.userName}</td>
               <td>
-                <Button>Edit</Button>
+               <Link to={'/editUser'}>
+               <Button onClick={()=>handleEdit(each?.id,each?.firstName,each?.lastName,each?.userName,each?.email)}>
+                  Edit
+                  </Button>
+               </Link>
+                
+                
+                
                 &nbsp;
                 <Button onClick={() => handleDelete(each?.id)}>Delete</Button>
               </td>
